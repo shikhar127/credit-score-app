@@ -40,7 +40,7 @@ export function AlertsSection() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="mb-6">
+    <div className="mb-4 md:mb-6">
       {/* Alert Header - Clickable */}
       <motion.button
         onClick={() => setIsExpanded(!isExpanded)}
@@ -50,28 +50,28 @@ export function AlertsSection() {
         whileTap={{ scale: 0.99 }}
         className="w-full"
       >
-        <Card className="p-4 flex items-center justify-between group cursor-pointer bg-gradient-to-r from-orange-50 to-red-50 border-orange-200">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-              <Bell className="w-5 h-5 text-orange-600" />
+        <Card className="p-3 md:p-4 flex items-center justify-between group cursor-pointer bg-gradient-to-r from-orange-50 to-red-50 border-orange-200">
+          <div className="flex items-center gap-2 md:gap-3">
+            <div className="w-8 h-8 md:w-10 md:h-10 bg-orange-100 rounded-full flex items-center justify-center">
+              <Bell className="w-4 h-4 md:w-5 md:h-5 text-orange-600" />
             </div>
             <div className="text-left">
-              <h3 className="font-bold text-slate-900 text-sm flex items-center gap-2">
+              <h3 className="font-bold text-slate-900 text-xs md:text-sm flex items-center gap-1.5 md:gap-2">
                 CIBIL Alerts
-                <span className="px-2 py-0.5 bg-orange-600 text-white text-[10px] font-bold rounded-full">
+                <span className="px-1.5 md:px-2 py-0.5 bg-orange-600 text-white text-[9px] md:text-[10px] font-bold rounded-full">
                   {ALERTS.length}
                 </span>
               </h3>
-              <p className="text-xs text-slate-600">
+              <p className="text-[10px] md:text-xs text-slate-600">
                 {isExpanded ? 'Click to hide alerts' : 'Click to view all alerts'}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             {isExpanded ? (
-              <ChevronUp className="w-5 h-5 text-slate-600" />
+              <ChevronUp className="w-4 h-4 md:w-5 md:h-5 text-slate-600" />
             ) : (
-              <ChevronDown className="w-5 h-5 text-slate-600" />
+              <ChevronDown className="w-4 h-4 md:w-5 md:h-5 text-slate-600" />
             )}
           </div>
         </Card>
@@ -87,7 +87,7 @@ export function AlertsSection() {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <div className="mt-3 space-y-2">
+            <div className="mt-2 md:mt-3 space-y-1.5 md:space-y-2">
               {ALERTS.map((alert, index) => (
                 <motion.div
                   key={alert.id}
@@ -95,15 +95,15 @@ export function AlertsSection() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="p-4 border-l-4 border-l-orange-500 bg-white hover:shadow-md transition-shadow">
-                    <div className="flex items-start gap-3">
-                      <div className="text-2xl shrink-0 mt-0.5">{alert.icon}</div>
+                  <Card className="p-3 md:p-4 border-l-3 md:border-l-4 border-l-orange-500 bg-white hover:shadow-md transition-shadow">
+                    <div className="flex items-start gap-2 md:gap-3">
+                      <div className="text-xl md:text-2xl shrink-0 mt-0.5">{alert.icon}</div>
                       <div className="flex-1">
-                        <h4 className="font-bold text-slate-900 text-sm mb-1 flex items-center gap-2">
+                        <h4 className="font-bold text-slate-900 text-xs md:text-sm mb-0.5 md:mb-1 flex items-center gap-1.5 md:gap-2">
                           {alert.type}
-                          <AlertCircle className="w-3.5 h-3.5 text-orange-500" />
+                          <AlertCircle className="w-3 h-3 md:w-3.5 md:h-3.5 text-orange-500" />
                         </h4>
-                        <p className="text-xs text-slate-600 leading-relaxed">
+                        <p className="text-[10px] md:text-xs text-slate-600 leading-relaxed">
                           {alert.message}
                         </p>
                       </div>

@@ -22,18 +22,18 @@ export function MetricCard({
   const radius = 80;
   const circumference = Math.PI * radius; // Half circle
   const strokeDashoffset = circumference - percentage / 100 * circumference;
-  return <Card className="p-6 relative overflow-hidden h-full flex flex-col justify-between group cursor-pointer" onClick={() => {}}>
+  return <Card className="p-3 md:p-6 relative overflow-hidden h-full flex flex-col justify-between group cursor-pointer" onClick={() => {}}>
       <div className="relative z-10">
-        <h3 className="text-xs font-bold text-gray-500 tracking-wider uppercase mb-1">
+        <h3 className="text-[10px] md:text-xs font-bold text-gray-500 tracking-wider uppercase mb-0.5 md:mb-1">
           {title}
         </h3>
-        <p className="text-2xl font-serif text-emerald-500 font-medium mb-6">
+        <p className="text-xl md:text-2xl font-serif text-emerald-500 font-medium mb-3 md:mb-6">
           {status}
         </p>
 
-        <div className="relative flex justify-center mb-4">
+        <div className="relative flex justify-center mb-2 md:mb-4">
           {/* Semi-circle Gauge */}
-          <div className="w-40 h-20 overflow-hidden relative">
+          <div className="w-32 h-16 md:w-40 md:h-20 overflow-hidden relative">
             <svg viewBox="0 0 200 100" className="w-full h-full">
               {/* Background Track */}
               <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#f0fdf4" strokeWidth="4" />
@@ -67,19 +67,19 @@ export function MetricCard({
 
             {/* Value Text */}
             <div className="absolute bottom-0 left-0 right-0 text-center">
-              <span className="text-3xl font-bold text-slate-800">{value}</span>
-              <span className="text-sm text-slate-500 ml-0.5">%</span>
+              <span className="text-2xl md:text-3xl font-bold text-slate-800">{value}</span>
+              <span className="text-xs md:text-sm text-slate-500 ml-0.5">%</span>
             </div>
           </div>
         </div>
 
-        <p className="text-sm text-slate-600 text-center leading-tight mb-4 px-2">
+        <p className="text-xs md:text-sm text-slate-600 text-center leading-tight mb-2 md:mb-4 px-1 md:px-2">
           {description}
         </p>
       </div>
 
       <div className="flex justify-center">
-        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-colors" />
+        <ChevronRight className="w-3.5 h-3.5 md:w-4 md:h-4 text-slate-400 group-hover:text-slate-600 transition-colors" />
       </div>
     </Card>;
 }
