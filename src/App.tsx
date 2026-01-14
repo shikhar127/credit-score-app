@@ -9,6 +9,7 @@ export function App() {
   const [currentPage, setCurrentPage] = useState<Page>('score');
   const [isPro, setIsPro] = useState(false);
   const [lastRefreshDate, setLastRefreshDate] = useState<string>('2024-08-03');
+  const [creditScore, setCreditScore] = useState(767);
 
   const handleProUpgrade = () => {
     setIsPro(true);
@@ -18,6 +19,8 @@ export function App() {
   const handleRefresh = () => {
     const today = new Date().toISOString().split('T')[0];
     setLastRefreshDate(today);
+    // Increment score by 1-5 points on refresh
+    setCreditScore(prev => Math.min(900, prev + Math.floor(Math.random() * 5) + 1));
   };
 
   return <>
@@ -27,6 +30,7 @@ export function App() {
         isPro={isPro}
         lastRefreshDate={lastRefreshDate}
         onRefresh={handleRefresh}
+        creditScore={creditScore}
       />}
       {currentPage === 'subscription' && <Subscription onBackClick={() => setCurrentPage('score')} onStartSubscription={() => setCurrentPage('payment')} />}
       {currentPage === 'payment' && <PaymentDetails onBackClick={() => setCurrentPage('subscription')} onConfirmPayment={() => setCurrentPage('success')} />}

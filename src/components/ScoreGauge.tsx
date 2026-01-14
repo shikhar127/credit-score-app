@@ -1,7 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
-export function ScoreGauge() {
+interface ScoreGaugeProps {
+  creditScore: number;
+}
+export function ScoreGauge({ creditScore }: ScoreGaugeProps) {
   // SVG configuration
   const size = 320;
   const strokeWidth = 6;
@@ -78,7 +81,7 @@ export function ScoreGauge() {
           stiffness: 200
         }} className="relative">
             <h1 className="text-6xl md:text-8xl font-bold text-slate-900 tracking-tight">
-              761
+              {creditScore}
             </h1>
           </motion.div>
 

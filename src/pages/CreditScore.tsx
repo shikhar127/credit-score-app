@@ -12,12 +12,14 @@ interface CreditScoreProps {
   isPro: boolean;
   lastRefreshDate: string;
   onRefresh: () => void;
+  creditScore: number;
 }
 export function CreditScore({
   onUpgradeClick,
   isPro,
   lastRefreshDate,
-  onRefresh
+  onRefresh,
+  creditScore
 }: CreditScoreProps) {
   const [activeTab, setActiveTab] = useState('summary');
 
@@ -101,7 +103,7 @@ export function CreditScore({
               <img src="/Screenshot_2026-01-14_at_7.25.08_PM.png" alt="Profile" className="w-full h-full object-cover" />
             </div>
             <div className="absolute -bottom-1 -right-1 w-6 h-6 md:w-8 md:h-8 bg-purple-600 rounded-full border-2 border-white flex items-center justify-center text-[8px] md:text-[10px] font-bold text-white shadow-sm">
-              750
+              {creditScore}
             </div>
           </div>
 
@@ -118,14 +120,14 @@ export function CreditScore({
             <h1 className="text-xl md:text-3xl text-slate-900 leading-tight">
               <span className="font-normal block">you're in the</span>
               <span className="font-serif font-bold italic block mt-0.5 md:mt-1">
-                800 club now
+                750 club now
               </span>
             </h1>
           </motion.div>
         </div>
 
         {/* Score Gauge */}
-        <ScoreGauge />
+        <ScoreGauge creditScore={creditScore} />
 
         {/* Refresh Button */}
         <div className="flex flex-col items-center gap-2 md:gap-3 mb-4 md:mb-10">
