@@ -52,8 +52,8 @@ export function ScoreGauge({ creditScore }: ScoreGaugeProps) {
         </svg>
 
         {/* Center Content */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          {/* Main Score - Simplified */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center pt-8 md:pt-12">
+          {/* Main Score - Centered */}
           <motion.div initial={{
           scale: 0.9,
           opacity: 0
@@ -64,7 +64,7 @@ export function ScoreGauge({ creditScore }: ScoreGaugeProps) {
           delay: 0.2,
           type: 'spring',
           stiffness: 200
-        }} className="relative">
+        }} className="relative mb-2 md:mb-3">
             <h1 className="text-6xl md:text-8xl font-bold text-slate-900 tracking-tight">
               {creditScore}
             </h1>
@@ -77,7 +77,7 @@ export function ScoreGauge({ creditScore }: ScoreGaugeProps) {
           opacity: 1
         }} transition={{
           delay: 0.6
-        }} className="mt-2 md:mt-4">
+        }}>
             <span className="text-blue-400 font-semibold tracking-wider text-xs md:text-sm">
               CIBIL
             </span>
