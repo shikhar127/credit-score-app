@@ -8,9 +8,25 @@
 @layer base {
   body {
     @apply font-sans text-slate-900 bg-gray-50;
+    /* Touch optimizations */
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    -webkit-touch-callout: none;
+    touch-action: manipulation;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply text-slate-900;
+  }
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  /* Safe area support for notched devices */
+  @supports (padding: env(safe-area-inset-bottom)) {
+    body {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
   }
 }
 
