@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
 interface ScoreGaugeProps {
   creditScore: number;
 }
@@ -53,21 +52,7 @@ export function ScoreGauge({ creditScore }: ScoreGaugeProps) {
         </svg>
 
         {/* Center Content */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center pt-8">
-          {/* Change Indicator */}
-          <motion.div initial={{
-          opacity: 0,
-          y: 10
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          delay: 0.4
-        }} className="flex items-center gap-0.5 md:gap-1 text-orange-500 font-semibold mb-1 md:mb-2">
-            <span className="text-base md:text-lg">27</span>
-            <ArrowDown className="w-3.5 h-3.5 md:w-4 md:h-4" />
-          </motion.div>
-
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
           {/* Main Score - Simplified */}
           <motion.div initial={{
           scale: 0.9,

@@ -146,13 +146,20 @@ export function CreditScore({
             {isPro
               ? canRefresh()
                 ? 'refresh now'
-                : 'already refreshed today'
+                : 'latest score'
               : 'upgrade to pro to refresh'}
           </motion.button>
           <p className="text-[9px] md:text-[10px] font-bold text-slate-400 tracking-widest uppercase">
             Last updated on {new Date(lastRefreshDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: '2-digit' }).replace(/ /g, ' ').toLowerCase()}
           </p>
         </div>
+
+        {/* CIBIL Alerts Section - Pro Only */}
+        {isPro && (
+          <div className="mb-4 md:mb-6">
+            <AlertsSection />
+          </div>
+        )}
 
         {/* Tabs */}
         <div className="flex items-center gap-2 md:gap-4 mb-4 md:mb-8">
@@ -165,13 +172,6 @@ export function CreditScore({
             HISTORY
           </button>
         </div>
-
-        {/* CIBIL Alerts Section - Pro Only */}
-        {isPro && (
-          <div className="mb-4 md:mb-6">
-            <AlertsSection />
-          </div>
-        )}
 
         {/* Metric Cards */}
         <div className="grid grid-cols-2 gap-2 md:gap-4 mb-4">
