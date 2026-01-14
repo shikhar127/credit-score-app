@@ -67,11 +67,11 @@ export function Subscription({
 
         {/* Features Grid */}
         <div className="space-y-6 mb-12">
-          <FeatureCard icon={<Bell className="w-6 h-6" />} title="Real-Time CIBIL Alerts" features={['Instant credit score changes', 'New or modified account alerts', 'Payment issue notifications', 'Potential fraud & identity risks']} delay={0.3} highlight={true} />
+          <FeatureCard icon={<Bell className="w-6 h-6" />} title="Real-Time CIBIL Alerts" features={['Instant credit score changes', 'New or modified account alerts to help prevent potential fraud and identity theft']} delay={0.3} highlight={true} />
 
           <FeatureCard icon={<RefreshCw className="w-6 h-6" />} title="Unlimited Refresh" description="Check your score as often as you like. No monthly restrictions or waiting periods." delay={0.4} />
 
-          <FeatureCard icon={<Sparkles className="w-6 h-6" />} title="AI Credit Advisor" features={['Ask questions in plain language', 'Personalized improvement guidance', 'Debt management strategies']} delay={0.5} />
+          <FeatureCard icon={<Sparkles className="w-6 h-6" />} title="AI Credit Advisor" features={['Ask questions and get answers to all your credit-related questions', 'Debt management strategies']} delay={0.5} />
         </div>
 
         {/* Trust Signals */}
