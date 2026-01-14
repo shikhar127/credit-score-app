@@ -154,12 +154,10 @@ export function CreditScore({
           </p>
         </div>
 
-        {/* CIBIL Alerts Section - Pro Only */}
-        {isPro && (
-          <div className="mb-4 md:mb-6">
-            <AlertsSection />
-          </div>
-        )}
+        {/* CIBIL Alerts Section */}
+        <div className="mb-4 md:mb-6">
+          <AlertsSection isPro={isPro} onUpgradeClick={onUpgradeClick} />
+        </div>
 
         {/* Tabs */}
         <div className="flex items-center gap-2 md:gap-4 mb-4 md:mb-8">

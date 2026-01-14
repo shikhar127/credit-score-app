@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bell, ChevronDown, ChevronUp, AlertCircle } from 'lucide-react';
+import { Bell, ChevronDown, ChevronUp, ChevronRight, AlertCircle } from 'lucide-react';
 import { Card } from './ui/Card';
 
 const ALERTS = [
@@ -36,14 +36,27 @@ const ALERTS = [
   },
 ];
 
-export function AlertsSection() {
+interface AlertsSectionProps {
+  isPro: boolean;
+  onUpgradeClick: () => void;
+}
+
+export function AlertsSection({ isPro, onUpgradeClick }: AlertsSectionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleClick = () => {
+    if (!isPro) {
+      onUpgradeClick();
+    } else {
+      setIsExpanded(!isExpanded);
+    }
+  };
 
   return (
     <div className="mb-4 md:mb-6">
       {/* Alert Header - Clickable */}
       <motion.button
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={handleClick}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         whileHover={{ scale: 1.01 }}
@@ -58,28 +71,38 @@ export function AlertsSection() {
             <div className="text-left">
               <h3 className="font-bold text-slate-900 text-xs md:text-sm flex items-center gap-1.5 md:gap-2">
                 CIBIL Alerts
-                <span className="px-1.5 md:px-2 py-0.5 bg-orange-600 text-white text-[9px] md:text-[10px] font-bold rounded-full">
-                  {ALERTS.length}
-                </span>
+                {isPro && (
+                  <span className="px-1.5 md:px-2 py-0.5 bg-orange-600 text-white text-[9px] md:text-[10px] font-bold rounded-full">
+                    {ALERTS.length}
+                  </span>
+                )}
               </h3>
               <p className="text-[10px] md:text-xs text-slate-600">
-                {isExpanded ? 'Click to hide alerts' : 'Click to view all alerts'}
+                {!isPro
+                  ? 'Upgrade to Pro to view alerts'
+                  : isExpanded
+                    ? 'Click to hide alerts'
+                    : 'Click to view all alerts'}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {isExpanded ? (
-              <ChevronUp className="w-4 h-4 md:w-5 md:h-5 text-slate-600" />
+            {isPro ? (
+              isExpanded ? (
+                <ChevronUp className="w-4 h-4 md:w-5 md:h-5 text-slate-600" />
+              ) : (
+                <ChevronDown className="w-4 h-4 md:w-5 md:h-5 text-slate-600" />
+              )
             ) : (
-              <ChevronDown className="w-4 h-4 md:w-5 md:h-5 text-slate-600" />
+              <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-slate-600" />
             )}
           </div>
         </Card>
       </motion.button>
 
-      {/* Alerts List - Expandable */}
+      {/* Alerts List - Expandable (Pro Only) */}
       <AnimatePresence>
-        {isExpanded && (
+        {isPro && isExpanded && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
