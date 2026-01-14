@@ -53,3 +53,23 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* PWA Display Mode - Remove default margins when installed */
+@media all and (display-mode: standalone) {
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Prevent pull-to-refresh on mobile */
+body {
+  overscroll-behavior-y: contain;
+}
+
+/* Make inputs look better on iOS */
+input,
+button {
+  -webkit-appearance: none;
+  appearance: none;
+}

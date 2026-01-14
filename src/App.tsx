@@ -3,6 +3,7 @@ import { CreditScore } from './pages/CreditScore';
 import { Subscription } from './pages/Subscription';
 import { PaymentDetails } from './pages/PaymentDetails';
 import { SubscriptionSuccess } from './pages/SubscriptionSuccess';
+import { InstallPrompt } from './components/InstallPrompt';
 type Page = 'score' | 'subscription' | 'payment' | 'success';
 export function App() {
   const [currentPage, setCurrentPage] = useState<Page>('score');
@@ -20,6 +21,7 @@ export function App() {
   };
 
   return <>
+      <InstallPrompt />
       {currentPage === 'score' && <CreditScore
         onUpgradeClick={() => setCurrentPage('subscription')}
         isPro={isPro}
