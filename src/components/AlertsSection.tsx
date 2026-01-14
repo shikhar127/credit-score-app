@@ -31,7 +31,7 @@ const ALERTS = [
   {
     id: 5,
     type: 'New Utilization Reporting',
-    message: 'Your credit utilization has changed. Log in to see how this update affects your score.',
+    message: 'Your credit utilization has changed. Check to see how this update affects your score.',
     icon: '📊',
   },
 ];
