@@ -99,8 +99,8 @@ export function CreditScore({
         {/* Profile Section */}
         <div className="flex flex-col items-center mb-4 md:mb-8">
           <div className="relative mb-3 md:mb-6">
-            <div className="w-14 h-14 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-slate-100 shadow-md">
-              <img src="/Screenshot_2026-01-14_at_7.25.08_PM.png" alt="Profile" className="w-full h-full object-cover" />
+            <div className="w-14 h-14 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-slate-200 shadow-lg">
+              <img src="/credit-score-app/profile-avatar.svg" alt="Profile" className="w-full h-full object-cover" />
             </div>
             <div className="absolute -bottom-1 -right-1 w-6 h-6 md:w-8 md:h-8 bg-purple-600 rounded-full border-2 border-white flex items-center justify-center text-[8px] md:text-[10px] font-bold text-white shadow-sm">
               {creditScore}
