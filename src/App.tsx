@@ -6,10 +6,28 @@ import { SubscriptionSuccess } from './pages/SubscriptionSuccess';
 type Page = 'score' | 'subscription' | 'payment' | 'success';
 export function App() {
   const [currentPage, setCurrentPage] = useState<Page>('score');
+  const [isPro, setIsPro] = useState(false);
+  const [lastRefreshDate, setLastRefreshDate] = useState<string>('2024-08-03');
+
+  const handleProUpgrade = () => {
+    setIsPro(true);
+    setCurrentPage('score');
+  };
+
+  const handleRefresh = () => {
+    const today = new Date().toISOString().split('T')[0];
+    setLastRefreshDate(today);
+  };
+
   return <>
-      {currentPage === 'score' && <CreditScore onUpgradeClick={() => setCurrentPage('subscription')} />}
+      {currentPage === 'score' && <CreditScore
+        onUpgradeClick={() => setCurrentPage('subscription')}
+        isPro={isPro}
+        lastRefreshDate={lastRefreshDate}
+        onRefresh={handleRefresh}
+      />}
       {currentPage === 'subscription' && <Subscription onBackClick={() => setCurrentPage('score')} onStartSubscription={() => setCurrentPage('payment')} />}
       {currentPage === 'payment' && <PaymentDetails onBackClick={() => setCurrentPage('subscription')} onConfirmPayment={() => setCurrentPage('success')} />}
-      {currentPage === 'success' && <SubscriptionSuccess onContinue={() => setCurrentPage('score')} />}
+      {currentPage === 'success' && <SubscriptionSuccess onContinue={handleProUpgrade} />}
     </>;
 }

@@ -6,13 +6,32 @@ import { MetricCard } from '../components/MetricCard';
 import { MilestoneBadge } from '../components/MilestoneBadge';
 import { AccountCard } from '../components/AccountCard';
 import { Card } from '../components/ui/Card';
+import { AlertsSection } from '../components/AlertsSection';
 interface CreditScoreProps {
   onUpgradeClick: () => void;
+  isPro: boolean;
+  lastRefreshDate: string;
+  onRefresh: () => void;
 }
 export function CreditScore({
-  onUpgradeClick
+  onUpgradeClick,
+  isPro,
+  lastRefreshDate,
+  onRefresh
 }: CreditScoreProps) {
   const [activeTab, setActiveTab] = useState('summary');
+
+  const canRefresh = () => {
+    if (!isPro) return false;
+    const today = new Date().toISOString().split('T')[0];
+    return lastRefreshDate !== today;
+  };
+
+  const handleRefreshClick = () => {
+    if (canRefresh()) {
+      onRefresh();
+    }
+  };
   return <div className="min-h-screen bg-white pb-20">
       {/* Header */}
       <header className="flex items-center justify-between px-6 py-6 sticky top-0 bg-white/80 backdrop-blur-md z-50">
@@ -28,31 +47,52 @@ export function CreditScore({
       </header>
 
       <main className="px-6 max-w-lg mx-auto">
-        {/* Upgrade Banner */}
-        <motion.button initial={{
-        opacity: 0,
-        y: -10
-      }} animate={{
-        opacity: 1,
-        y: 0
-      }} whileHover={{
-        scale: 1.02
-      }} whileTap={{
-        scale: 0.98
-      }} onClick={onUpgradeClick} className="w-full mb-6 p-4 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-2xl shadow-lg shadow-emerald-200 flex items-center justify-between group">
-          <div className="flex items-center gap-3">
+        {/* Upgrade Banner - Only show if not Pro */}
+        {!isPro && (
+          <motion.button initial={{
+          opacity: 0,
+          y: -10
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} whileHover={{
+          scale: 1.02
+        }} whileTap={{
+          scale: 0.98
+        }} onClick={onUpgradeClick} className="w-full mb-6 p-4 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-2xl shadow-lg shadow-emerald-200 flex items-center justify-between group">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <Crown className="w-5 h-5 text-white" />
+              </div>
+              <div className="text-left">
+                <p className="text-white font-bold text-sm">Upgrade to Pro</p>
+                <p className="text-emerald-50 text-xs">
+                  Get real-time alerts & AI advisor
+                </p>
+              </div>
+            </div>
+            <ChevronRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform" />
+          </motion.button>
+        )}
+
+        {/* Pro Badge - Only show if Pro */}
+        {isPro && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="w-full mb-6 p-4 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl shadow-lg shadow-purple-200 flex items-center gap-3"
+          >
             <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
               <Crown className="w-5 h-5 text-white" />
             </div>
             <div className="text-left">
-              <p className="text-white font-bold text-sm">Upgrade to Pro</p>
-              <p className="text-emerald-50 text-xs">
-                Get real-time alerts & AI advisor
+              <p className="text-white font-bold text-sm">Pro Member</p>
+              <p className="text-purple-50 text-xs">
+                Enjoying all premium features
               </p>
             </div>
-          </div>
-          <ChevronRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform" />
-        </motion.button>
+          </motion.div>
+        )}
 
         {/* Profile Section */}
         <div className="flex flex-col items-center mb-8">
@@ -89,15 +129,26 @@ export function CreditScore({
 
         {/* Refresh Button */}
         <div className="flex flex-col items-center gap-3 mb-10">
-          <motion.button whileHover={{
-          scale: 1.05
-        }} whileTap={{
-          scale: 0.95
-        }} className="bg-black text-white px-8 py-3 rounded-xl font-bold text-sm shadow-lg shadow-slate-200 flex items-center gap-2">
-            refresh now
+          <motion.button
+            whileHover={canRefresh() ? { scale: 1.05 } : {}}
+            whileTap={canRefresh() ? { scale: 0.95 } : {}}
+            onClick={handleRefreshClick}
+            disabled={!canRefresh()}
+            className={`px-8 py-3 rounded-xl font-bold text-sm shadow-lg flex items-center gap-2 transition-all ${
+              canRefresh()
+                ? 'bg-black text-white shadow-slate-200 hover:bg-slate-800'
+                : 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-slate-100'
+            }`}
+          >
+            <RefreshCw className={`w-4 h-4 ${canRefresh() ? '' : 'opacity-50'}`} />
+            {isPro
+              ? canRefresh()
+                ? 'refresh now'
+                : 'already refreshed today'
+              : 'upgrade to pro to refresh'}
           </motion.button>
           <p className="text-[10px] font-bold text-slate-400 tracking-widest uppercase">
-            Last updated on 3 Aug '24
+            Last updated on {new Date(lastRefreshDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: '2-digit' }).replace(/ /g, ' ').toLowerCase()}
           </p>
         </div>
 
@@ -112,6 +163,9 @@ export function CreditScore({
             HISTORY
           </button>
         </div>
+
+        {/* CIBIL Alerts Section - Pro Only */}
+        {isPro && <AlertsSection />}
 
         {/* Metric Cards */}
         <div className="grid grid-cols-2 gap-4 mb-4">
