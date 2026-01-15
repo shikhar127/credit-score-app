@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Bell, RefreshCw, Sparkles, ShieldCheck } from 'lucide-react';
+import { X, Bell, ShieldCheck } from 'lucide-react';
 
 interface ProPitchBottomSheetProps {
   isOpen: boolean;
@@ -50,51 +50,30 @@ export function ProPitchBottomSheet({ isOpen, onClose, onStartSubscription }: Pr
 
               {/* Title */}
               <h2 className="text-2xl md:text-3xl text-slate-900 font-bold text-center mb-3">
-                Unlock <span className="italic text-emerald-600">Pro</span> Features
+                Subscribe to <span className="italic text-emerald-600">Cred Score Pro</span>
               </h2>
 
-              <p className="text-slate-500 text-center text-sm mb-6 max-w-sm mx-auto">
-                Get real-time alerts and unlimited access to protect your credit health
+              <p className="text-slate-600 text-center text-sm mb-6 max-w-sm mx-auto leading-relaxed">
+                Get real-time alerts on any changes in your credit report
               </p>
 
-              {/* Features */}
-              <div className="space-y-4 mb-6">
-                {/* Feature 1 */}
-                <div className="flex items-start gap-3 p-4 bg-orange-50 rounded-xl border border-orange-100">
-                  <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center shrink-0">
-                    <Bell className="w-5 h-5 text-orange-600" />
+              {/* Alert Preview */}
+              <div className="mb-6">
+                <div className="flex items-start gap-3 p-5 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl border border-orange-200">
+                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center shrink-0">
+                    <Bell className="w-6 h-6 text-orange-600" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-900 text-sm mb-1">Real-Time CIBIL Alerts</h3>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Get instant notifications when your credit score changes or new accounts are opened
+                    <h3 className="font-bold text-slate-900 text-sm mb-1.5">Real-Time CIBIL Alerts</h3>
+                    <p className="text-xs text-slate-600 leading-relaxed mb-2">
+                      Stay protected with instant notifications when:
                     </p>
-                  </div>
-                </div>
-
-                {/* Feature 2 */}
-                <div className="flex items-start gap-3 p-4 bg-blue-50 rounded-xl border border-blue-100">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
-                    <RefreshCw className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-slate-900 text-sm mb-1">Unlimited Refresh</h3>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Check your score as often as you like with no restrictions
-                    </p>
-                  </div>
-                </div>
-
-                {/* Feature 3 */}
-                <div className="flex items-start gap-3 p-4 bg-purple-50 rounded-xl border border-purple-100">
-                  <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center shrink-0">
-                    <Sparkles className="w-5 h-5 text-purple-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-slate-900 text-sm mb-1">AI Credit Advisor</h3>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Get personalized answers to your credit questions and debt strategies
-                    </p>
+                    <ul className="text-xs text-slate-600 space-y-1">
+                      <li>• Your credit score changes</li>
+                      <li>• New accounts are opened</li>
+                      <li>• Credit inquiries are made</li>
+                      <li>• Your credit utilization shifts</li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -128,7 +107,7 @@ export function ProPitchBottomSheet({ isOpen, onClose, onStartSubscription }: Pr
                 onClick={onStartSubscription}
                 className="w-full bg-slate-900 text-white px-6 py-4 rounded-xl font-bold text-sm shadow-lg"
               >
-                View Plans
+                Explore Plans
               </motion.button>
             </div>
           </motion.div>
