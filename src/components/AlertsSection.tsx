@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bell, ChevronDown, ChevronUp, ChevronRight, AlertCircle } from 'lucide-react';
 import { Card } from './ui/Card';
+import { ProPitchBottomSheet } from './ProPitchBottomSheet';
 
 const ALERTS = [
   {
@@ -43,13 +44,19 @@ interface AlertsSectionProps {
 
 export function AlertsSection({ isPro, onUpgradeClick }: AlertsSectionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
 
   const handleClick = () => {
     if (!isPro) {
-      onUpgradeClick();
+      setShowBottomSheet(true);
     } else {
       setIsExpanded(!isExpanded);
     }
+  };
+
+  const handleStartSubscription = () => {
+    setShowBottomSheet(false);
+    onUpgradeClick();
   };
 
   return (
@@ -138,6 +145,13 @@ export function AlertsSection({ isPro, onUpgradeClick }: AlertsSectionProps) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Pro Pitch Bottom Sheet */}
+      <ProPitchBottomSheet
+        isOpen={showBottomSheet}
+        onClose={() => setShowBottomSheet(false)}
+        onStartSubscription={handleStartSubscription}
+      />
     </div>
   );
 }

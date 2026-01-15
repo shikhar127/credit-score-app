@@ -106,13 +106,13 @@ export function Subscription({
     }} className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 p-6 pb-8 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">
         <div className="max-w-lg mx-auto flex items-center justify-between gap-4">
           <div>
-            <p className="text-sm text-slate-500 font-medium line-through">
-              ₹999/mo
-            </p>
             <div className="flex items-baseline gap-1">
-              <span className="text-3xl font-bold text-slate-900">₹499</span>
-              <span className="text-sm text-slate-500 font-medium">/month</span>
+              <span className="text-3xl font-bold text-slate-900">₹999</span>
+              <span className="text-sm text-slate-500 font-medium">/year</span>
             </div>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Just ₹83/month
+            </p>
           </div>
 
           <motion.button whileHover={{
