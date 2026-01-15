@@ -58,8 +58,7 @@ export function Subscription({
       features: [
         'Everything in Monthly Pro',
         'Just ₹83/month',
-        'Unlimited daily refreshes',
-        'Priority support',
+        'Priority support on any issues',
       ],
     },
   ];
