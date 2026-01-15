@@ -5,9 +5,12 @@ import { PaymentDetails } from './pages/PaymentDetails';
 import { SubscriptionSuccess } from './pages/SubscriptionSuccess';
 import { InstallPrompt } from './components/InstallPrompt';
 type Page = 'score' | 'subscription' | 'payment' | 'success';
+type Tier = 'one-time' | 'monthly' | 'annual';
+
 export function App() {
   const [currentPage, setCurrentPage] = useState<Page>('score');
   const [isPro, setIsPro] = useState(false);
+  const [selectedTier, setSelectedTier] = useState<Tier>('annual');
   const [lastRefreshDate, setLastRefreshDate] = useState<string>(() => {
     // Set to yesterday so user can refresh on first load
     const yesterday = new Date();
@@ -37,8 +40,18 @@ export function App() {
         onRefresh={handleRefresh}
         creditScore={creditScore}
       />}
-      {currentPage === 'subscription' && <Subscription onBackClick={() => setCurrentPage('score')} onStartSubscription={() => setCurrentPage('payment')} />}
-      {currentPage === 'payment' && <PaymentDetails onBackClick={() => setCurrentPage('subscription')} onConfirmPayment={() => setCurrentPage('success')} />}
+      {currentPage === 'subscription' && <Subscription
+        onBackClick={() => setCurrentPage('score')}
+        onStartSubscription={(tier) => {
+          setSelectedTier(tier);
+          setCurrentPage('payment');
+        }}
+      />}
+      {currentPage === 'payment' && <PaymentDetails
+        selectedTier={selectedTier}
+        onBackClick={() => setCurrentPage('subscription')}
+        onConfirmPayment={() => setCurrentPage('success')}
+      />}
       {currentPage === 'success' && <SubscriptionSuccess onContinue={handleProUpgrade} />}
     </>;
 }

@@ -4,7 +4,7 @@ import { ArrowLeft, Check, Zap, TrendingUp, Crown } from 'lucide-react';
 
 interface SubscriptionProps {
   onBackClick: () => void;
-  onStartSubscription: () => void;
+  onStartSubscription: (tier: 'one-time' | 'monthly' | 'annual') => void;
 }
 
 export function Subscription({
@@ -206,7 +206,7 @@ export function Subscription({
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={onStartSubscription}
+            onClick={() => onStartSubscription(selectedTier)}
             className="w-full bg-slate-900 text-white px-6 py-3 md:py-4 rounded-xl font-bold text-xs md:text-sm shadow-lg"
           >
             Continue with {tiers.find(t => t.id === selectedTier)?.name}
