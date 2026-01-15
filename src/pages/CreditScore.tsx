@@ -7,6 +7,8 @@ import { MilestoneBadge } from '../components/MilestoneBadge';
 import { AccountCard } from '../components/AccountCard';
 import { Card } from '../components/ui/Card';
 import { AlertsSection } from '../components/AlertsSection';
+import { RefreshLimitModal } from '../components/RefreshLimitModal';
+
 interface CreditScoreProps {
   onUpgradeClick: () => void;
   isPro: boolean;
@@ -14,6 +16,7 @@ interface CreditScoreProps {
   onRefresh: () => void;
   creditScore: number;
 }
+
 export function CreditScore({
   onUpgradeClick,
   isPro,
@@ -22,17 +25,43 @@ export function CreditScore({
   creditScore
 }: CreditScoreProps) {
   const [activeTab, setActiveTab] = useState('summary');
+  const [showRefreshModal, setShowRefreshModal] = useState(false);
+
+  const calculateDaysUntilNextRefresh = () => {
+    const lastRefresh = new Date(lastRefreshDate);
+    const nextRefresh = new Date(lastRefresh);
+    nextRefresh.setDate(nextRefresh.getDate() + 30); // 30 days from last refresh
+
+    const today = new Date();
+    const daysRemaining = Math.ceil((nextRefresh.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+
+    return Math.max(daysRemaining, 0);
+  };
 
   const canRefresh = () => {
     if (!isPro) return false;
-    const today = new Date().toISOString().split('T')[0];
-    return lastRefreshDate !== today;
+    const daysUntilNext = calculateDaysUntilNextRefresh();
+    return daysUntilNext === 0;
   };
 
   const handleRefreshClick = () => {
-    if (canRefresh()) {
-      onRefresh();
+    if (!isPro) {
+      // Non-Pro users - do nothing or show upgrade
+      return;
     }
+
+    if (canRefresh()) {
+      // Pro user can refresh (30 days have passed)
+      onRefresh();
+    } else {
+      // Pro user but within 30-day limit - show modal
+      setShowRefreshModal(true);
+    }
+  };
+
+  const handleExplorePlans = () => {
+    setShowRefreshModal(false);
+    onUpgradeClick(); // Navigate to subscription page
   };
   return <div className="min-h-screen bg-white pb-12 md:pb-20">
       {/* Header */}
@@ -132,22 +161,18 @@ export function CreditScore({
         {/* Refresh Button */}
         <div className="flex flex-col items-center gap-2 md:gap-3 mb-4 md:mb-10">
           <motion.button
-            whileHover={canRefresh() ? { scale: 1.05 } : {}}
-            whileTap={canRefresh() ? { scale: 0.95 } : {}}
+            whileHover={isPro ? { scale: 1.05 } : {}}
+            whileTap={isPro ? { scale: 0.95 } : {}}
             onClick={handleRefreshClick}
-            disabled={!canRefresh()}
+            disabled={!isPro}
             className={`px-6 md:px-8 py-2 md:py-3 rounded-xl font-bold text-xs md:text-sm shadow-lg flex items-center gap-2 transition-all min-h-[44px] ${
-              canRefresh()
-                ? 'bg-black text-white shadow-slate-200 hover:bg-slate-800'
+              isPro
+                ? 'bg-black text-white shadow-slate-200 hover:bg-slate-800 cursor-pointer'
                 : 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-slate-100'
             }`}
           >
-            <RefreshCw className={`w-3.5 h-3.5 md:w-4 md:h-4 ${canRefresh() ? '' : 'opacity-50'}`} />
-            {isPro
-              ? canRefresh()
-                ? 'refresh now'
-                : 'latest score'
-              : 'upgrade to pro to refresh'}
+            <RefreshCw className={`w-3.5 h-3.5 md:w-4 md:h-4 ${isPro ? '' : 'opacity-50'}`} />
+            {isPro ? 'Refresh Now' : 'upgrade to pro to refresh'}
           </motion.button>
           <p className="text-[9px] md:text-[10px] font-bold text-slate-400 tracking-widest uppercase">
             Last updated on {new Date(lastRefreshDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: '2-digit' }).replace(/ /g, ' ').toLowerCase()}
@@ -225,5 +250,13 @@ export function CreditScore({
           </div>
         </div>
       </main>
+
+      {/* Refresh Limit Modal */}
+      <RefreshLimitModal
+        isOpen={showRefreshModal}
+        onClose={() => setShowRefreshModal(false)}
+        onExplorePlans={handleExplorePlans}
+        daysUntilNextRefresh={calculateDaysUntilNextRefresh()}
+      />
     </div>;
 }
