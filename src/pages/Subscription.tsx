@@ -127,13 +127,23 @@ export function Subscription({
               <div
                 className={`p-5 md:p-6 rounded-2xl border-2 transition-all ${
                   selectedTier === tier.id
-                    ? `border-${tier.color}-500 bg-${tier.color}-50`
+                    ? tier.id === 'one-time'
+                      ? 'border-slate-500 bg-slate-50'
+                      : tier.id === 'monthly'
+                      ? 'border-emerald-500 bg-emerald-50'
+                      : 'border-purple-500 bg-purple-50'
                     : 'border-slate-200 bg-white'
                 }`}
               >
                 {/* Icon & Name */}
                 <div className="flex items-center gap-2 mb-3">
-                  <div className={`w-10 h-10 rounded-full bg-${tier.color}-100 flex items-center justify-center text-${tier.color}-600`}>
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                    tier.id === 'one-time'
+                      ? 'bg-slate-100 text-slate-600'
+                      : tier.id === 'monthly'
+                      ? 'bg-emerald-100 text-emerald-600'
+                      : 'bg-purple-100 text-purple-600'
+                  }`}>
                     {tier.icon}
                   </div>
                   <div>

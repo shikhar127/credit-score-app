@@ -8,7 +8,12 @@ type Page = 'score' | 'subscription' | 'payment' | 'success';
 export function App() {
   const [currentPage, setCurrentPage] = useState<Page>('score');
   const [isPro, setIsPro] = useState(false);
-  const [lastRefreshDate, setLastRefreshDate] = useState<string>('2024-08-03');
+  const [lastRefreshDate, setLastRefreshDate] = useState<string>(() => {
+    // Set to yesterday so user can refresh on first load
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    return yesterday.toISOString().split('T')[0];
+  });
   const [creditScore, setCreditScore] = useState(767);
 
   const handleProUpgrade = () => {
