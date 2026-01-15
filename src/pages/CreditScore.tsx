@@ -8,6 +8,7 @@ import { AccountCard } from '../components/AccountCard';
 import { Card } from '../components/ui/Card';
 import { AlertsSection } from '../components/AlertsSection';
 import { RefreshLimitModal } from '../components/RefreshLimitModal';
+import { FreeUserRefreshSheet } from '../components/FreeUserRefreshSheet';
 
 interface CreditScoreProps {
   onUpgradeClick: () => void;
@@ -26,6 +27,7 @@ export function CreditScore({
 }: CreditScoreProps) {
   const [activeTab, setActiveTab] = useState('summary');
   const [showRefreshModal, setShowRefreshModal] = useState(false);
+  const [showFreeUserSheet, setShowFreeUserSheet] = useState(false);
 
   const calculateDaysUntilNextRefresh = () => {
     const lastRefresh = new Date(lastRefreshDate);
@@ -46,7 +48,8 @@ export function CreditScore({
 
   const handleRefreshClick = () => {
     if (!isPro) {
-      // Non-Pro users - do nothing or show upgrade
+      // Non-Pro users - show bottom sheet
+      setShowFreeUserSheet(true);
       return;
     }
 
@@ -61,6 +64,11 @@ export function CreditScore({
 
   const handleExplorePlans = () => {
     setShowRefreshModal(false);
+    onUpgradeClick(); // Navigate to subscription page
+  };
+
+  const handleExplorePlansFromFreeSheet = () => {
+    setShowFreeUserSheet(false);
     onUpgradeClick(); // Navigate to subscription page
   };
   return <div className="min-h-screen bg-white pb-12 md:pb-20">
@@ -161,18 +169,13 @@ export function CreditScore({
         {/* Refresh Button */}
         <div className="flex flex-col items-center gap-2 md:gap-3 mb-4 md:mb-10">
           <motion.button
-            whileHover={isPro ? { scale: 1.05 } : {}}
-            whileTap={isPro ? { scale: 0.95 } : {}}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={handleRefreshClick}
-            disabled={!isPro}
-            className={`px-6 md:px-8 py-2 md:py-3 rounded-xl font-bold text-xs md:text-sm shadow-lg flex items-center gap-2 transition-all min-h-[44px] ${
-              isPro
-                ? 'bg-black text-white shadow-slate-200 hover:bg-slate-800 cursor-pointer'
-                : 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-slate-100'
-            }`}
+            className="px-6 md:px-8 py-2 md:py-3 rounded-xl font-bold text-xs md:text-sm shadow-lg flex items-center gap-2 transition-all min-h-[44px] bg-black text-white shadow-slate-200 hover:bg-slate-800 cursor-pointer"
           >
-            <RefreshCw className={`w-3.5 h-3.5 md:w-4 md:h-4 ${isPro ? '' : 'opacity-50'}`} />
-            {isPro ? 'Refresh Now' : 'upgrade to pro to refresh'}
+            <RefreshCw className="w-3.5 h-3.5 md:w-4 md:h-4" />
+            Refresh Now
           </motion.button>
           <p className="text-[9px] md:text-[10px] font-bold text-slate-400 tracking-widest uppercase">
             Last updated on {new Date(lastRefreshDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: '2-digit' }).replace(/ /g, ' ').toLowerCase()}
@@ -257,6 +260,13 @@ export function CreditScore({
         onClose={() => setShowRefreshModal(false)}
         onExplorePlans={handleExplorePlans}
         daysUntilNextRefresh={calculateDaysUntilNextRefresh()}
+      />
+
+      {/* Free User Refresh Sheet */}
+      <FreeUserRefreshSheet
+        isOpen={showFreeUserSheet}
+        onClose={() => setShowFreeUserSheet(false)}
+        onExplorePlans={handleExplorePlansFromFreeSheet}
       />
     </div>;
 }
