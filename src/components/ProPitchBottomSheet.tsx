@@ -99,14 +99,26 @@ export function ProPitchBottomSheet({ isOpen, onClose, onStartSubscription }: Pr
                 </div>
               </div>
 
-              {/* Pricing */}
+              {/* Pricing Teaser */}
               <div className="bg-slate-50 rounded-xl p-4 mb-6 text-center border border-slate-200">
-                <p className="text-xs text-slate-500 font-medium mb-1">Special Offer</p>
-                <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-3xl font-bold text-slate-900">₹999</span>
-                  <span className="text-sm text-slate-500 font-medium">/year</span>
+                <p className="text-xs text-slate-500 font-medium mb-2">Flexible Plans Available</p>
+                <div className="flex items-center justify-center gap-3 text-xs">
+                  <div>
+                    <span className="font-bold text-slate-900">₹49</span>
+                    <span className="text-slate-500"> one-time</span>
+                  </div>
+                  <span className="text-slate-300">•</span>
+                  <div>
+                    <span className="font-bold text-slate-900">₹129</span>
+                    <span className="text-slate-500">/month</span>
+                  </div>
+                  <span className="text-slate-300">•</span>
+                  <div>
+                    <span className="font-bold text-emerald-600">₹999</span>
+                    <span className="text-slate-500">/year</span>
+                  </div>
                 </div>
-                <p className="text-xs text-slate-400 mt-1">Cancel anytime, no hidden fees</p>
+                <p className="text-xs text-slate-400 mt-2">+ GST • Cancel anytime</p>
               </div>
 
               {/* CTA Button */}
@@ -116,7 +128,7 @@ export function ProPitchBottomSheet({ isOpen, onClose, onStartSubscription }: Pr
                 onClick={onStartSubscription}
                 className="w-full bg-slate-900 text-white px-6 py-4 rounded-xl font-bold text-sm shadow-lg"
               >
-                Start Subscription
+                View Plans
               </motion.button>
             </div>
           </motion.div>

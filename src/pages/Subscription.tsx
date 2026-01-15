@@ -1,20 +1,75 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Bell, RefreshCw, Sparkles, ShieldCheck, CheckCircle2 } from 'lucide-react';
-import { FeatureCard } from '../components/FeatureCard';
+import { ArrowLeft, Check, Zap, TrendingUp, Crown } from 'lucide-react';
+
 interface SubscriptionProps {
   onBackClick: () => void;
   onStartSubscription: () => void;
 }
+
 export function Subscription({
   onBackClick,
   onStartSubscription
 }: SubscriptionProps) {
-  return <div className="min-h-screen bg-white pb-32">
+  const [selectedTier, setSelectedTier] = useState<'one-time' | 'monthly' | 'annual'>('annual');
+
+  const tiers = [
+    {
+      id: 'one-time' as const,
+      name: 'Quick Check',
+      price: '49',
+      period: 'one-time',
+      description: 'For a one-time credit check',
+      icon: <Zap className="w-5 h-5" />,
+      color: 'slate',
+      features: [
+        'Instant CIBIL credit report access',
+        'View your current credit score',
+        'See all your credit accounts',
+      ],
+    },
+    {
+      id: 'monthly' as const,
+      name: 'Monthly Pro',
+      price: '129',
+      period: 'month',
+      description: 'For active credit management',
+      icon: <TrendingUp className="w-5 h-5" />,
+      color: 'emerald',
+      popular: true,
+      features: [
+        'Everything in Quick Check',
+        'Daily CIBIL report refresh',
+        'Real-time CIBIL alerts',
+        'AI credit advisor',
+        'Credit score simulations',
+      ],
+    },
+    {
+      id: 'annual' as const,
+      name: 'Annual Pro',
+      price: '999',
+      period: 'year',
+      savings: 'Save ₹549 annually',
+      description: 'Best value for long-term planning',
+      icon: <Crown className="w-5 h-5" />,
+      color: 'purple',
+      bestValue: true,
+      features: [
+        'Everything in Monthly Pro',
+        'Just ₹83/month',
+        'Unlimited daily refreshes',
+        'Priority support',
+      ],
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white pb-24">
       {/* Header */}
-      <header className="flex items-center justify-between px-6 py-6 sticky top-0 bg-white/80 backdrop-blur-md z-50 border-b border-slate-50">
+      <header className="flex items-center justify-between px-4 md:px-6 py-4 md:py-6 sticky top-0 bg-white/80 backdrop-blur-md z-50 border-b border-slate-100">
         <button onClick={onBackClick} className="p-2 -ml-2 hover:bg-slate-50 rounded-full transition-colors">
-          <ArrowLeft className="w-6 h-6 text-slate-800" />
+          <ArrowLeft className="w-5 h-5 md:w-6 md:h-6 text-slate-800" />
         </button>
         <div className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-full shadow-sm">
           <div className="w-4 h-4 rounded-full bg-slate-900 flex items-center justify-center">
@@ -24,105 +79,129 @@ export function Subscription({
         </div>
       </header>
 
-      <main className="px-6 max-w-lg mx-auto pt-8">
+      <main className="px-4 md:px-6 max-w-4xl mx-auto pt-6 md:pt-8">
         {/* Hero Section */}
-        <div className="text-center mb-12">
-          <motion.div initial={{
-          scale: 0.9,
-          opacity: 0
-        }} animate={{
-          scale: 1,
-          opacity: 1
-        }} transition={{
-          duration: 0.5
-        }} className="inline-flex items-center gap-2 px-4 py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-xs font-bold uppercase tracking-wider mb-6 border border-emerald-100">
-            <ShieldCheck className="w-3 h-3" />
-            Premium Protection
-          </motion.div>
-
-          <motion.h1 initial={{
-          y: 20,
-          opacity: 0
-        }} animate={{
-          y: 0,
-          opacity: 1
-        }} transition={{
-          delay: 0.1
-        }} className="text-4xl text-slate-900 leading-tight mb-4 font-serif font-bold">
-            Upgrade to <span className="italic text-emerald-600">Pro</span>
+        <div className="text-center mb-8 md:mb-10">
+          <motion.h1
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="text-2xl md:text-3xl text-slate-900 font-bold mb-2"
+          >
+            Choose Your Plan
           </motion.h1>
-
-          <motion.p initial={{
-          y: 20,
-          opacity: 0
-        }} animate={{
-          y: 0,
-          opacity: 1
-        }} transition={{
-          delay: 0.2
-        }} className="text-slate-500 text-lg leading-relaxed max-w-xs mx-auto">
-            Take full control of your financial health with real-time insights.
+          <motion.p
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="text-slate-600 text-sm md:text-base"
+          >
+            Select the option that fits your needs
           </motion.p>
         </div>
 
-        {/* Features Grid */}
-        <div className="space-y-6 mb-12">
-          <FeatureCard icon={<Bell className="w-6 h-6" />} title="Real-Time CIBIL Alerts" features={['Instant credit score changes', 'New or modified account alerts to help prevent potential fraud and identity theft']} delay={0.3} highlight={true} />
+        {/* Pricing Tiers */}
+        <div className="grid md:grid-cols-3 gap-4 md:gap-5 mb-6">
+          {tiers.map((tier, index) => (
+            <motion.div
+              key={tier.id}
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.1 + index * 0.1 }}
+              onClick={() => setSelectedTier(tier.id)}
+              className={`relative cursor-pointer transition-all ${
+                selectedTier === tier.id
+                  ? 'scale-[1.02] shadow-lg'
+                  : 'hover:shadow-md'
+              }`}
+            >
+              {tier.popular && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-emerald-600 text-white text-xs font-bold rounded-full">
+                  Popular
+                </div>
+              )}
+              {tier.bestValue && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-purple-600 text-white text-xs font-bold rounded-full">
+                  Best Value
+                </div>
+              )}
 
-          <FeatureCard icon={<RefreshCw className="w-6 h-6" />} title="Unlimited Refresh" description="Check your score as often as you like. No monthly restrictions or waiting periods." delay={0.4} />
+              <div
+                className={`p-5 md:p-6 rounded-2xl border-2 transition-all ${
+                  selectedTier === tier.id
+                    ? `border-${tier.color}-500 bg-${tier.color}-50`
+                    : 'border-slate-200 bg-white'
+                }`}
+              >
+                {/* Icon & Name */}
+                <div className="flex items-center gap-2 mb-3">
+                  <div className={`w-10 h-10 rounded-full bg-${tier.color}-100 flex items-center justify-center text-${tier.color}-600`}>
+                    {tier.icon}
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-base">{tier.name}</h3>
+                  </div>
+                </div>
 
-          <FeatureCard icon={<Sparkles className="w-6 h-6" />} title="AI Credit Advisor" features={['Ask questions and get answers to all your credit-related questions', 'Debt management strategies']} delay={0.5} />
+                {/* Price */}
+                <div className="mb-3">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl md:text-4xl font-bold text-slate-900">₹{tier.price}</span>
+                    <span className="text-sm text-slate-500">+ GST</span>
+                  </div>
+                  <p className="text-xs text-slate-500 font-medium">
+                    {tier.period === 'one-time' ? 'One-time payment' : `per ${tier.period}`}
+                  </p>
+                  {tier.savings && (
+                    <p className="text-xs text-emerald-600 font-bold mt-1">{tier.savings}</p>
+                  )}
+                </div>
+
+                {/* Description */}
+                <p className="text-xs text-slate-600 mb-4">{tier.description}</p>
+
+                {/* Features */}
+                <div className="space-y-2">
+                  {tier.features.map((feature, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <span className="text-xs text-slate-700 leading-relaxed">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
         {/* Trust Signals */}
-        <motion.div initial={{
-        opacity: 0
-      }} animate={{
-        opacity: 1
-      }} transition={{
-        delay: 0.6
-      }} className="flex items-center justify-center gap-6 text-slate-400 mb-8">
-          <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider">
-            <CheckCircle2 className="w-4 h-4" />
-            No hidden fees
-          </div>
-          <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider">
-            <CheckCircle2 className="w-4 h-4" />
-            Cancel anytime
-          </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="text-center text-xs text-slate-500 mb-8"
+        >
+          <p>Prices exclude GST • Secure payment • Cancel anytime</p>
         </motion.div>
       </main>
 
-      {/* Fixed Pricing Footer */}
-      <motion.div initial={{
-      y: 100
-    }} animate={{
-      y: 0
-    }} transition={{
-      delay: 0.8,
-      type: 'spring',
-      stiffness: 200,
-      damping: 25
-    }} className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 p-6 pb-8 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">
-        <div className="max-w-lg mx-auto flex items-center justify-between gap-4">
-          <div>
-            <div className="flex items-baseline gap-1">
-              <span className="text-3xl font-bold text-slate-900">₹999</span>
-              <span className="text-sm text-slate-500 font-medium">/year</span>
-            </div>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Just ₹83/month
-            </p>
-          </div>
-
-          <motion.button whileHover={{
-          scale: 1.02
-        }} whileTap={{
-          scale: 0.98
-        }} onClick={onStartSubscription} className="bg-slate-900 text-white px-8 py-4 rounded-xl font-bold text-sm shadow-lg shadow-slate-200 flex-1">
-            Start Subscription
+      {/* Fixed CTA Footer */}
+      <motion.div
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+        transition={{ delay: 0.6, type: 'spring', stiffness: 200, damping: 25 }}
+        className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-4 md:p-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]"
+      >
+        <div className="max-w-4xl mx-auto">
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={onStartSubscription}
+            className="w-full bg-slate-900 text-white px-6 py-4 rounded-xl font-bold text-sm shadow-lg"
+          >
+            Continue with {tiers.find(t => t.id === selectedTier)?.name}
           </motion.button>
         </div>
       </motion.div>
-    </div>;
+    </div>
+  );
 }
