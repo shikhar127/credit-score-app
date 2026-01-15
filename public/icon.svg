@@ -1,35 +1,56 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background with gradient -->
+  <!-- Gradient definitions -->
   <defs>
-    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
     </linearGradient>
-    <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#FF9B6B;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#FFD56B;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#00D26A;stop-opacity:1" />
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="scoreGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#34d399;stop-opacity:1" />
     </linearGradient>
   </defs>
 
-  <!-- Background -->
-  <rect width="512" height="512" rx="115" fill="url(#bgGradient)"/>
+  <!-- Main background -->
+  <rect width="512" height="512" rx="115" fill="url(#mainGradient)"/>
 
-  <!-- Credit card outline -->
-  <rect x="96" y="180" width="320" height="200" rx="20" fill="white" opacity="0.2"/>
-  <rect x="96" y="180" width="320" height="200" rx="20" stroke="white" stroke-width="4" fill="none"/>
+  <!-- Outer circle ring -->
+  <circle cx="256" cy="256" r="200" stroke="white" stroke-width="8" fill="none" opacity="0.3"/>
 
-  <!-- Chip -->
-  <rect x="130" y="220" width="50" height="40" rx="8" fill="white" opacity="0.8"/>
-  <rect x="135" y="225" width="40" height="30" rx="4" fill="url(#bgGradient)"/>
+  <!-- Shield/Badge shape -->
+  <path d="M 256 80 L 340 110 L 340 240 Q 340 350 256 420 Q 172 350 172 240 L 172 110 Z" fill="white" opacity="0.15"/>
+  <path d="M 256 80 L 340 110 L 340 240 Q 340 350 256 420 Q 172 350 172 240 L 172 110 Z" stroke="white" stroke-width="6" fill="none" opacity="0.5"/>
 
-  <!-- Score gauge arc -->
-  <circle cx="340" cy="280" r="55" stroke="white" stroke-width="8" fill="none" opacity="0.3" stroke-dasharray="173 173"/>
-  <circle cx="340" cy="280" r="55" stroke="url(#scoreGradient)" stroke-width="8" fill="none" stroke-dasharray="130 173" stroke-linecap="round" transform="rotate(-90 340 280)"/>
+  <!-- CS Monogram -->
+  <g transform="translate(256, 220)">
+    <!-- C -->
+    <path d="M -50 -35 Q -80 -35 -80 0 Q -80 35 -50 35 L -40 35 L -40 20 L -50 20 Q -65 20 -65 0 Q -65 -20 -50 -20 L -40 -20 L -40 -35 Z" fill="white"/>
 
-  <!-- Score text -->
-  <text x="340" y="290" font-family="system-ui, sans-serif" font-size="36" font-weight="bold" fill="white" text-anchor="middle">750</text>
+    <!-- S -->
+    <path d="M 20 -35 L 70 -35 L 70 -20 L 25 -20 L 25 -5 L 65 -5 L 65 35 L 20 35 L 20 20 L 60 20 L 60 10 L 20 10 Z" fill="white"/>
+  </g>
 
-  <!-- Star icon -->
-  <path d="M256 410 L266 435 L292 438 L274 455 L278 481 L256 469 L234 481 L238 455 L220 438 L246 435 Z" fill="white" opacity="0.9"/>
+  <!-- Score indicator -->
+  <g transform="translate(256, 320)">
+    <!-- Score bar background -->
+    <rect x="-60" y="0" width="120" height="12" rx="6" fill="white" opacity="0.3"/>
+    <!-- Score bar fill -->
+    <rect x="-60" y="0" width="90" height="12" rx="6" fill="url(#scoreGlow)"/>
+
+    <!-- Score text -->
+    <text x="0" y="38" font-family="system-ui, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">750+</text>
+  </g>
+
+  <!-- Decorative stars -->
+  <circle cx="380" cy="150" r="4" fill="url(#accentGradient)"/>
+  <circle cx="410" cy="200" r="3" fill="white" opacity="0.6"/>
+  <circle cx="132" cy="150" r="3" fill="white" opacity="0.6"/>
+  <circle cx="102" cy="200" r="4" fill="url(#accentGradient)"/>
+
+  <!-- Checkmark accent -->
+  <path d="M 256 400 L 270 415 L 300 380" stroke="url(#scoreGlow)" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
