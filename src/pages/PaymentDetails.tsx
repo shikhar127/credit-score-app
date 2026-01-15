@@ -36,7 +36,7 @@ export function PaymentDetails({
           <div className="w-4 h-4 rounded-full bg-slate-900 flex items-center justify-center">
             <div className="w-1.5 h-1.5 bg-white rounded-full" />
           </div>
-          <span className="text-xs font-bold text-slate-800">foresight</span>
+          <span className="text-xs font-bold text-slate-800">Cred Score Pro</span>
         </div>
       </header>
 

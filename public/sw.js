@@ -1,4 +1,4 @@
-const CACHE_NAME = 'foresight-v1';
+const CACHE_NAME = 'credscorepro-v1';
 const urlsToCache = [
   '/credit-score-app/',
   '/credit-score-app/index.html',

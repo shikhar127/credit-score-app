@@ -1,6 +1,6 @@
 {
-  "name": "Foresight - Credit Score Tracker",
-  "short_name": "Foresight",
+  "name": "Cred Score Pro - Credit Score Tracker",
+  "short_name": "Cred Score Pro",
   "description": "Track your credit score and manage your financial health",
   "start_url": "/credit-score-app/",
   "scope": "/credit-score-app/",
