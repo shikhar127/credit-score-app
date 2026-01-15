@@ -50,7 +50,7 @@ export function Subscription({
       name: 'Annual Pro',
       price: '999',
       period: 'year',
-      savings: 'Save ₹549 annually',
+      savings: 'Save ₹648 annually',
       description: 'Best value for long-term planning',
       icon: <Crown className="w-5 h-5" />,
       color: 'purple',
