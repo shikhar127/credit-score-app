@@ -1,18 +1,33 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, RefreshCw, Check } from 'lucide-react';
+import { X, RefreshCw, Check, Zap } from 'lucide-react';
 
 interface FreeUserRefreshSheetProps {
   isOpen: boolean;
   onClose: () => void;
   onExplorePlans: () => void;
+  lastRefreshDate: string;
 }
 
 export function FreeUserRefreshSheet({
   isOpen,
   onClose,
-  onExplorePlans
+  onExplorePlans,
+  lastRefreshDate
 }: FreeUserRefreshSheetProps) {
+  // Calculate days until next free refresh
+  const calculateDaysUntilNextRefresh = () => {
+    const lastRefresh = new Date(lastRefreshDate);
+    const nextRefresh = new Date(lastRefresh);
+    nextRefresh.setDate(nextRefresh.getDate() + 30); // 30 days from last refresh
+
+    const today = new Date();
+    const daysRemaining = Math.ceil((nextRefresh.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+
+    return Math.max(daysRemaining, 0);
+  };
+
+  const daysUntilNextRefresh = calculateDaysUntilNextRefresh();
   return (
     <AnimatePresence>
       {isOpen && (
@@ -52,29 +67,50 @@ export function FreeUserRefreshSheet({
 
             {/* Content */}
             <div className="p-6">
-              <p className="text-slate-700 mb-6 leading-relaxed">
-                Credit score refreshes are available with our paid plans. Upgrade to access fresh credit score updates and premium features.
+              <p className="text-slate-700 mb-2 leading-relaxed">
+                Your next <span className="font-semibold text-slate-900">free refresh</span> is available in{' '}
+                <span className="font-bold text-orange-600">{daysUntilNextRefresh} days</span>.
               </p>
 
-              {/* Benefits */}
+              <p className="text-slate-600 text-sm mb-6">
+                Free users get one credit score refresh every 30 days.
+              </p>
+
+              {/* Quick Check Offer */}
+              <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl p-4 mb-4 border border-emerald-200">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center shrink-0">
+                    <Zap className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-emerald-900 mb-1">Need to refresh now?</h3>
+                    <p className="text-sm text-emerald-800 mb-3">
+                      Get instant access for just <span className="font-bold">₹49</span> with Quick Check
+                    </p>
+                    <ul className="text-xs text-emerald-700 space-y-1">
+                      <li>• Instant CIBIL report access</li>
+                      <li>• View updated credit score right away</li>
+                      <li>• See all your credit accounts</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pro Plans Info */}
               <div className="bg-slate-50 rounded-xl p-4 mb-6 border border-slate-200">
-                <h3 className="font-bold text-slate-900 mb-3">What you'll get:</h3>
-                <div className="space-y-2">
+                <h3 className="font-bold text-slate-900 mb-2 text-sm">Or upgrade to Pro for unlimited refreshes:</h3>
+                <div className="space-y-1.5">
                   <div className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <span className="text-sm text-slate-700">Get fresh credit score updates</span>
+                    <span className="text-xs text-slate-700">Refresh every 30 days as a Pro member</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <span className="text-sm text-slate-700">Real-time CIBIL alerts</span>
+                    <span className="text-xs text-slate-700">Real-time CIBIL alerts & AI advisor</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <span className="text-sm text-slate-700">AI credit advisor</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <span className="text-sm text-slate-700">Credit score simulations</span>
+                    <span className="text-xs text-slate-700">Credit score simulations & insights</span>
                   </div>
                 </div>
               </div>

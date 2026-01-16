@@ -267,6 +267,7 @@ export function CreditScore({
         isOpen={showFreeUserSheet}
         onClose={() => setShowFreeUserSheet(false)}
         onExplorePlans={handleExplorePlansFromFreeSheet}
+        lastRefreshDate={lastRefreshDate}
       />
     </div>;
 }
