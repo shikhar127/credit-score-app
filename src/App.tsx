@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CreditScore } from './pages/CreditScore';
 import { Subscription } from './pages/Subscription';
 import { PaymentDetails } from './pages/PaymentDetails';
@@ -9,7 +9,11 @@ type Tier = 'one-time' | 'monthly' | 'annual';
 
 export function App() {
   const [currentPage, setCurrentPage] = useState<Page>('score');
-  const [isPro, setIsPro] = useState(false);
+  const [isPro, setIsPro] = useState(() => {
+    // Initialize from localStorage if available
+    const saved = localStorage.getItem('isPro');
+    return saved === 'true';
+  });
   const [selectedTier, setSelectedTier] = useState<Tier>('annual');
   const [lastRefreshDate, setLastRefreshDate] = useState<string>(() => {
     // Set to yesterday so user can refresh on first load
@@ -18,6 +22,11 @@ export function App() {
     return yesterday.toISOString().split('T')[0];
   });
   const [creditScore, setCreditScore] = useState(767);
+
+  // Persist isPro state to localStorage
+  useEffect(() => {
+    localStorage.setItem('isPro', isPro.toString());
+  }, [isPro]);
 
   const handleProUpgrade = () => {
     setIsPro(true);
