@@ -102,7 +102,7 @@ export function FreeUserRefreshSheet({
                 <div className="space-y-1.5">
                   <div className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <span className="text-xs text-slate-700">Refresh every 30 days as a Pro member</span>
+                    <span className="text-xs text-slate-700">Refresh everyday as a Pro member</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
